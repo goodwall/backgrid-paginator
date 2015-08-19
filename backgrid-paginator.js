@@ -113,6 +113,12 @@
     isFastForward: false,
 
     /**
+       @property {boolean} renderAnchorHref Whether to render href attribute
+       inside anchor tags
+    */
+    renderAnchorHref: false,
+
+    /**
        Initializer.
 
        @param {Object} options
@@ -137,7 +143,7 @@
       var lastPage = state.lastPage;
 
       _.extend(this, _.pick(options,
-                            ["isRewind", "isBack", "isForward", "isFastForward"]));
+                            ["isRewind", "isBack", "isForward", "isFastForward", "renderAnchorHref"]));
 
       var pageIndex;
       if (this.isRewind) pageIndex = firstPage;
@@ -161,7 +167,11 @@
     render: function () {
       this.$el.empty();
       var anchor = document.createElement("a");
-      anchor.href = '#';
+      
+      if (this.renderAnchorHref) {
+        anchor.href = '#';
+      };
+
       if (this.title) anchor.title = this.title;
       anchor.innerHTML = this.label;
       this.el.appendChild(anchor);
